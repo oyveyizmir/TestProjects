@@ -14,29 +14,14 @@ namespace WebApiClient
         static void Main(string[] args)
         {
             Thread.Sleep(2000);
-            RunAsync().Wait();
+            GetByName(); ;
         }
 
-        static async Task RunAsync()
+        static void GetByName()
         {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://localhost:12345");
-                //client.DefaultRequestHeaders.Accept.Clear();
-                //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage msg = await client.GetAsync("api/products?name=B");
-                Console.WriteLine(msg);
-                Console.WriteLine(await msg.Content.ReadAsStringAsync());
-                if (msg.IsSuccessStatusCode)
-                {
-                    var product = await msg.Content.ReadAsAsync<Product>();
-                    //var products = await msg.Content.ReadAsAsync<Product[]>();
-                    //Array.ForEach(product, Console.WriteLine);
-                    Console.WriteLine(product);
-                }
-                else
-                    Console.WriteLine("Error");
-            }
+            var client = new ClientProxy();
+            Product product = client.GetProductByName("b");
+            Console.WriteLine(product);
         }
     }
 }

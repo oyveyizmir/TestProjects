@@ -24,7 +24,7 @@ namespace WebApiServer
             return _products.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public Product GetByName(string name)
+        public virtual Product GetByName(string name)
         {
             return _products.Where(p => p.Name == name).FirstOrDefault();
         }
