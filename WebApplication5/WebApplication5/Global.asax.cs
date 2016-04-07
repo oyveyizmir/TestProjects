@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using WebApplication5.Controllers;
 
 namespace WebApplication5
 {
@@ -15,6 +16,8 @@ namespace WebApplication5
     {
         protected void Application_Start()
         {
+            ControllerBuilder.Current.SetControllerFactory(typeof(ControllerFactory1));
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -26,13 +29,12 @@ namespace WebApplication5
         {
             base.Init();
 
-            this.AddOnBeginRequestAsync(BeginHandler, EndHandler);
+            //this.AddOnBeginRequestAsync(BeginHandler, EndHandler);
         }
 
         private void EndHandler(IAsyncResult ar)
         {
             ((Task)ar).Wait();
-            MvcHandler h;
         }
 
         private IAsyncResult BeginHandler(object sender, EventArgs e, AsyncCallback cb, object extraData)
